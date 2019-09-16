@@ -316,7 +316,6 @@ public class BrandQuery {
     }
 
     public static class Criteria extends GeneratedCriteria {
-
         protected Criteria() {
             super();
         }
