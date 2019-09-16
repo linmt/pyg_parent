@@ -32,7 +32,8 @@ public class BrandController {
      */
     @RequestMapping("/findPage")
     public PageResult findPage(Integer page, Integer rows) {
-        PageResult result = brandService.findPage(page, rows);
+        //PageResult result = brandService.findPage(page, rows);
+        PageResult result = brandService.findPage(null, page, rows);
         return result;
     }
 
@@ -94,5 +95,11 @@ public class BrandController {
             e.printStackTrace();
             return new Result(false, "删除失败!");
         }
+    }
+
+    @RequestMapping("/search")
+    public PageResult search(@RequestBody  Brand brand, Integer page, Integer rows) {
+        PageResult result = brandService.findPage(brand, page, rows);
+        return result;
     }
 }

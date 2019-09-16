@@ -8,7 +8,8 @@ import java.util.List;
 public interface BrandService {
     public List<Brand> findAll();
 
-    public PageResult findPage(Integer page, Integer rows);
+    //public PageResult findPage(Integer page, Integer rows);
+    public PageResult findPage(Brand brand, Integer page, Integer rows);
 
     public void add(Brand brand);
 

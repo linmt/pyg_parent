@@ -3,6 +3,7 @@ package cn.itcast.core.service;
 import cn.itcast.core.dao.good.BrandDao;
 import cn.itcast.core.pojo.entity.PageResult;
 import cn.itcast.core.pojo.good.Brand;
+import cn.itcast.core.pojo.good.BrandQuery;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -21,10 +22,29 @@ public class BrandServiceImpl implements BrandService {
         return brands;
     }
 
-    public PageResult findPage(Integer page, Integer rows) {
+//    public PageResult findPage(Integer page, Integer rows) {
+//        //利用分页助手实现分页, 第一个参数:当前页, 第二个参数: 每页展示数据条数
+//        PageHelper.startPage(page, rows);
+//        Page<Brand> brandList = (Page<Brand>) brandDao.selectByExample(null);
+//        return new PageResult(brandList.getTotal(), brandList.getResult());
+//    }
+
+    public PageResult findPage(Brand brand, Integer page, Integer rows) {
         //利用分页助手实现分页, 第一个参数:当前页, 第二个参数: 每页展示数据条数
         PageHelper.startPage(page, rows);
-        Page<Brand> brandList = (Page<Brand>) brandDao.selectByExample(null);
+
+        BrandQuery brandQuery = new BrandQuery();
+        BrandQuery.Criteria criteria = brandQuery.createCriteria();
+        if (brand != null) {
+            if (brand.getName() != null && !"".equals(brand.getName())) {
+                criteria.andNameLike("%"+brand.getName()+"%");
+            }
+            if (brand.getFirstChar() != null && !"".equals(brand.getFirstChar())) {
+                criteria.andFirstCharLike("%"+brand.getFirstChar()+"%");
+            }
+        }
+
+        Page<Brand> brandList = (Page<Brand>) brandDao.selectByExample(brandQuery);
         return new PageResult(brandList.getTotal(), brandList.getResult());
     }
 
