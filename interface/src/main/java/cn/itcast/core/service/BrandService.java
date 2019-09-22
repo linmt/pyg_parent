@@ -4,6 +4,7 @@ import cn.itcast.core.pojo.entity.PageResult;
 import cn.itcast.core.pojo.good.Brand;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BrandService {
     public List<Brand> findAll();
@@ -18,4 +19,6 @@ public interface BrandService {
     public void update(Brand brand);
 
     public void delete(Long[] ids);
+
+    public List<Map> selectOptionList();
 }

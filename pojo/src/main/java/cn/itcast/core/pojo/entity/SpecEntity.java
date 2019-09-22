@@ -12,8 +12,10 @@ import java.util.List;
 public class SpecEntity implements Serializable{
 
     //规格对象
+    //必须和页面对应<td><input class="form-control" placeholder="规格名称" ng-model="entity.specification.specName">
     private Specification specification;
     //规格选项集合
+    //<tr ng-repeat="pojo in entity.specificationOptionList">
     private List<SpecificationOption> specificationOptionList;
 
     public Specification getSpecification() {

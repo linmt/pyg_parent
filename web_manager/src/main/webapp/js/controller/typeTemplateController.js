@@ -22,7 +22,7 @@ app.controller('typeTemplateController' ,function($scope,$controller,brandServic
 		);
 	}
 	
-	//查询实体 
+	//查询实体   从数据库中查询出来的是字符串，我们必须将其转换为json对象才能实现信息的回显。
 	$scope.findOne=function(id){				
 		typeTemplateService.findOne(id).success(
 			function(response){
@@ -56,8 +56,7 @@ app.controller('typeTemplateController' ,function($scope,$controller,brandServic
 			}		
 		);				
 	}
-	
-	 
+
 	//批量删除 
 	$scope.dele=function(){			
 		//获取选中的复选框			
@@ -82,7 +81,9 @@ app.controller('typeTemplateController' ,function($scope,$controller,brandServic
 			}			
 		);
 	}
-    
+
+	//$scope.brandList={data:[{id:1,text:'联想'},{id:2,text:'华为'},{id:3,text:'小米'}]};
+	//id 和 text名称是固定的
 	$scope.brandList={data:[]}
 	// 查询关联的品牌信息:
 	$scope.findBrandList = function(){
