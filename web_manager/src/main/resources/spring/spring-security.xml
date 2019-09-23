@@ -35,7 +35,7 @@
         <!-- 不使用csrf的校验 -->
         <csrf disabled="true"/>
 
-        <!-- 配置框架页面不拦截 -->
+        <!-- 配置框架页面不拦截 , 这个配置是设置html页面中可以使用html的iframe标签和frame标签-->
         <headers>
             <frame-options policy="SAMEORIGIN"/>
         </headers>

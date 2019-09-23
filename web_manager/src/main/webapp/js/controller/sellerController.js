@@ -50,7 +50,6 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 			}		
 		);				
 	}
-	
 	 
 	//批量删除 
 	$scope.dele=function(){			

@@ -50,8 +50,7 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 			}		
 		);				
 	}
-	
-	 
+
 	//批量删除 
 	$scope.dele=function(){			
 		//获取选中的复选框			
@@ -92,7 +91,6 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 	}
 	
 	$scope.selectList = function(p_entity){
-		
 		if($scope.grade == 1){
 			$scope.entity_1 = null;
 			$scope.entity_2 = null;
@@ -104,18 +102,6 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 		if($scope.grade == 3){
 			$scope.entity_2 = p_entity;
 		}
-		
 		$scope.findByParentId(p_entity.id);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-    
 });	
