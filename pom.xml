@@ -23,6 +23,7 @@
         <module>web_shop</module>
         <module>web_user</module>
         <module>solr_util</module>
+        <module>../springSecurityDemo</module>
     </modules>
 
     <!-- 集中定义依赖版本号 -->
