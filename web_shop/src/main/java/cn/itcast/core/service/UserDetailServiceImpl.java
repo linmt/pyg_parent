@@ -16,7 +16,7 @@ import java.util.List;
  *
  * 这里不能用注解@Service,@Service只是将该类声明为一个bean，不能在里面注入SellerService
  *
- * 解决办法：spring-security.xml中手动生命该类，并注入SellerService
+ * 解决办法：spring-security.xml中手动声明该类，并注入SellerService
  */
 public class UserDetailServiceImpl implements UserDetailsService {
 

@@ -28,7 +28,6 @@ app.controller("baseController",function($scope){
 			var idx = $scope.selectIds.indexOf(id);
 			$scope.selectIds.splice(idx,1);
 		}
-		
 	}
 	
 	// 定义方法：获取JSON字符串中的某个key对应值的集合
@@ -38,11 +37,9 @@ app.controller("baseController",function($scope){
 		
 		var value = "";
 		for(var i=0;i<jsonObj.length;i++){
-			
 			if(i>0){
 				value += ",";
 			}
-			
 			value += jsonObj[i][key];
 		}
 		return value;
@@ -55,8 +52,6 @@ app.controller("baseController",function($scope){
 				return list[i];
 			}
 		}
-		
 		return null;
 	}
-	
 });

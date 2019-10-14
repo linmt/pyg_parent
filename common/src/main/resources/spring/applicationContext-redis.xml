@@ -14,6 +14,7 @@
             http://www.springframework.org/schema/cache/spring-cache.xsd">
 
     <!-- redis 相关配置 -->
+    <!-- testOnBorrow：在提取一个jedis实例时，是否提前进行验证操作；如果为true，则得到的jedis实例均是可用的； -->
     <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxIdle" value="${redis.maxIdle}"/>
         <property name="maxWaitMillis" value="${redis.maxWait}"/>

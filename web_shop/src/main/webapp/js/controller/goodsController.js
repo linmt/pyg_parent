@@ -39,7 +39,7 @@ app.controller('goodsController', function ($scope, $controller, $location, type
                 // 处理扩展属性:
                 $scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.entity.goodsDesc.customAttributeItems);
 
-                // 处理规格
+                // 处理规格  [{"attributeName":"网络","attributeValue":["移动3G","联通3G"]},{"attributeName":"机身内存","attributeValue":["16G","128G"]}]
                 $scope.entity.goodsDesc.specificationItems = JSON.parse($scope.entity.goodsDesc.specificationItems);
 
                 // 遍历SKU的集合:
@@ -50,8 +50,11 @@ app.controller('goodsController', function ($scope, $controller, $location, type
         );
     }
 
+    //根据规格名称和选项名称返回是否被勾选
+    //ng-checked="checkAttributeValue(pojo.text,p.optionName)  机身内存:16G
     $scope.checkAttributeValue = function (specName, optionName) {
         var items = $scope.entity.goodsDesc.specificationItems;
+        //baseController.js  从集合中查询某个名称的值是否存在
         var object = $scope.searchObjectByKey(items, "attributeName", specName);
         if (object != null) {
             if (object.attributeValue.indexOf(optionName) >= 0) {
@@ -79,6 +82,9 @@ app.controller('goodsController', function ($scope, $controller, $location, type
                 if (response.success) {
                     //重新查询
                     alert(response.message);
+                    //下面两句是讲义中的
+                    $scope.entity={};
+                    editor.html("");
                     location.href = "goods.html";
                 } else {
                     alert(response.message);
@@ -167,6 +173,7 @@ app.controller('goodsController', function ($scope, $controller, $location, type
     });
 
     // 查询模板下的品牌列表:
+    //模板id变化触发这个方法
     $scope.$watch("entity.goods.typeTemplateId", function (newValue, oldValue) {
         // 根据模板ID查询模板的数据
         typeTemplateService.findOne(newValue).success(function (response) {
@@ -181,6 +188,10 @@ app.controller('goodsController', function ($scope, $controller, $location, type
         });
 
         // 根据模板ID获得规格的列表的数据：
+        /*
+         本身模板表有存规格字段spec_ids，为什么还要去规格表查？
+         因为模板表存的规格集合里面，只有id和text两个字段，这两个字段是tb_specification表的，而我们此处不仅要这两个字段，还要规格选项表tb_specification_option中的字段
+         */
         typeTemplateService.findBySpecList(newValue).success(function (response) {
             $scope.specList = response;
         });

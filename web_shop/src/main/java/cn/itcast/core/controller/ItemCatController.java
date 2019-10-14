@@ -25,4 +25,9 @@ public class ItemCatController {
     public ItemCat findOne(Long id) {
         return  catService.findOne(id);
     }
+
+    @RequestMapping("/findAll")
+    public List<ItemCat> findAll() {
+        return catService.findAll();
+    }
 }
