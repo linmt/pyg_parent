@@ -23,7 +23,6 @@ app.service('cartService',function($http){
 			}			
 		}
 		return totalValue;
-		
 	}
 	
 	//获取当前登录账号的收货地址
@@ -35,6 +34,4 @@ app.service('cartService',function($http){
 	this.submitOrder=function(order){
 		return $http.post('order/add.do',order);		
 	}
-	
-	
 });

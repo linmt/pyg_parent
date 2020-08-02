@@ -5,11 +5,11 @@ app.service("brandService", function ($http) {
     }
 
     this.findByPage = function (page, rows) {
-        return $http.get("../brand/findByPage.do?page=" + page + "&rows=" + rows);
+        return $http.get("../brand/findPage.do?page=" + page + "&rows=" + rows);
     }
 
     this.save = function (entity) {
-        return $http.post("../brand/save.do", entity);
+        return $http.post("../brand/add.do", entity);
     }
 
     this.update = function (entity) {
@@ -17,7 +17,7 @@ app.service("brandService", function ($http) {
     }
 
     this.findById = function (id) {
-        return $http.get("../brand/findById.do?id=" + id);
+        return $http.get("../brand/findOne.do?id=" + id);
     }
 
     this.dele = function (ids) {

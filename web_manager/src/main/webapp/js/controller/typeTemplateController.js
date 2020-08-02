@@ -21,7 +21,12 @@ app.controller('typeTemplateController' ,function($scope,$controller,brandServic
 			}			
 		);
 	}
-	
+	/*
+	 <script>
+	 var obj = JSON.parse('{ "name":"runoob", "alexa":10000, "site":"www.runoob.com" }');
+	 document.getElementById("demo").innerHTML = obj.name + "：" + obj.site;
+	 </script>
+	 */
 	//查询实体   从数据库中查询出来的是字符串，我们必须将其转换为json对象才能实现信息的回显。
 	$scope.findOne=function(id){				
 		typeTemplateService.findOne(id).success(

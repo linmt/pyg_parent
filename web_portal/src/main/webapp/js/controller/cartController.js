@@ -22,9 +22,7 @@ app.controller('cartController',function($scope,cartService){
 			}		
 		);		
 	}
-	
 
-	
 	//获取当前用户的地址列表
 	$scope.findAddressList=function(){
 		cartService.findAddressList().success(
@@ -36,7 +34,6 @@ app.controller('cartController',function($scope,cartService){
 						break;
 					}					
 				}
-				
 			}
 		);		
 	}
@@ -78,13 +75,10 @@ app.controller('cartController',function($scope,cartService){
 					}else{//如果货到付款，跳转到提示页面
 						location.href="paysuccess.html";
 					}
-					
 				}else{
 					alert(response.message);	//也可以跳转到提示页面				
 				}
-				
-			}				
+			}
 		);		
 	}
-	
 });

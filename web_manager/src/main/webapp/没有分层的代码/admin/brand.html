@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
     <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="../css/style.css">
+
     <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
     <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
 
@@ -166,6 +167,10 @@
         <div class="pull-left">
             <div class="form-group form-inline">
                 <div class="btn-group">
+                    <!--
+                    data-toggle指以什么事件触发，常用的如collapse,modal,popover,tooltips等；
+                    data-target指事件的目标，一起使用就是代表data-target所指的元素以data-toggle指定的形式显示。
+                    -->
                     <button type="button" class="btn btn-default" title="新建" data-toggle="modal"
                             data-target="#editModal" ng-click="entity={}"><i class="fa fa-file-o"></i> 新建
                     </button>
@@ -227,10 +232,29 @@
 <!-- /.box-body -->
 
 <!-- 编辑窗口 -->
+<!--
+tabIndex属性
+可以设置键盘中的TAB键在控件中的移动顺序,即焦点的顺序。
+把控件的tabIndex属性设成1到32767的一个值，就可以把这个控件加入到TAB键的序列中。
+这样，当浏览者使用TAB键在网页控件中移动时，将首先移动到具有最小tabIndex属性值的控件上，最后在具有最大tabIndex属性值的控件上结束移动。
+如果有两个控件的tabIndex属性相同，则以控件在html代码中出现的顺序为准。
+默认的tabIndex属性为 0 ，将排列在在所有指定tabIndex的控件之后。
+而若把tabIndex属性设为一个负值（如tabIndex="-1"），那么这个链接将被排除在TAB键的序列之外。
+
+role=“dialog”代表这是一个对话框
+
+aria-labelledby：是残障人士使用屏幕阅读器时，会读取的内容
+
+aria-hidden:是使用屏幕阅读器时，忽略该元素值
+-->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <!--
+                <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+                如果你的modal弹窗里面加上这个按钮，那么点击则会关闭当前弹窗，关键在于data-dismiss="modal"，它让按钮有了这个功能。
+                -->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 id="myModalLabel">品牌编辑</h3>
             </div>

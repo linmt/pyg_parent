@@ -79,6 +79,10 @@
     </if>
     <include refid="Base_Column_List" />
     from tb_brand
+    <!--
+    https://www.cnblogs.com/straybirds/p/9085414.html
+    可以看到有个<if test="_parameter != null" >，如果只有一个参数，那么_parameter 就代表该参数，如果有多个参数，那么_parameter 可以get(0)得到第一个参数。
+    -->
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

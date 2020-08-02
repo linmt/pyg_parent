@@ -10,11 +10,10 @@
     <link rel="stylesheet" type="text/css" href="css/webbase.css" />
     <link rel="stylesheet" type="text/css" href="css/pages-getOrderInfo.css" />
     
-    <script type="text/javascript" src="plugins/angularjs/angular.min.js"> </script>
-	<script type="text/javascript" src="js/base.js"> </script>
-	<script type="text/javascript" src="js/service/cartService.js"> </script>
+    <script type="text/javascript" src="plugins/angularjs/angular.min.js"></script>
+	<script type="text/javascript" src="js/base.js"></script>
+	<script type="text/javascript" src="js/service/cartService.js"></script>
 	<script type="text/javascript" src="js/controller/cartController.js"> </script>
-    
 </head>
 
 <body ng-app="pinyougou" ng-controller="cartController" ng-init="findAddressList();findCartList()">
@@ -71,7 +70,6 @@
 					<div class="addressInfo">
 						<ul class="addr-detail">
 							<li class="addr-item">
-							
 							  <div ng-repeat="address in addressList">
 								<div class="con name {{isSeletedAddress(address)?'selected':''}}"><a href="javascript:;" ng-click="selectAddress(address)">{{address.contact}}<span title="点击取消选择">&nbsp;</a></div>
 								<div class="con address">{{address.address}}<span>{{address.mobile}}</span>
@@ -80,10 +78,7 @@
 								</div>
 								<div class="clearfix"></div>
 							  </div>
-							 
 							</li>
-							
-							
 						</ul>
 						<!--添加地址-->
                           <div  tabindex="-1" role="dialog" data-hasfoot="false" class="sui-modal hide fade edit">
@@ -129,10 +124,7 @@
 									    	建议填写常用地址：<a href="#" class="sui-btn btn-default">家里</a>　<a href="#" class="sui-btn btn-default">父母家</a>　<a href="#" class="sui-btn btn-default">公司</a>
 									    </div>
 									  </div>
-									  
 						      	</form>
-						      	
-						      	
 						      </div>
 						      <div class="modal-footer">
 						        <button type="button" data-ok="modal" class="sui-btn btn-primary btn-large">确定</button>
@@ -144,7 +136,6 @@
 						 <!--确认地址-->
 					</div>
 					<div class="hr"></div>
-					
 				</div>
 				<div class="hr"></div>
 				<!--支付和送货-->
@@ -165,9 +156,7 @@
 					<div class="step-cont">
 						<ul class="send-detail">
 							<li>
-								
 								<div class="sendGoods" ng-repeat="cart in cartList">
-									
 									<ul class="yui3-g" ng-repeat="item in cart.orderItemList">
 										<li class="yui3-u-1-6">
 											<span><img width="100px" height="100px" src="{{item.picPath}}"/></span>
@@ -243,49 +232,39 @@
 			<div class="Mod-service">
 				<ul class="Mod-Service-list">
 					<li class="grid-service-item intro  intro1">
-
 						<i class="serivce-item fl"></i>
 						<div class="service-text">
 							<h4>正品保障</h4>
 							<p>正品保障，提供发票</p>
 						</div>
-
 					</li>
 					<li class="grid-service-item  intro intro2">
-
 						<i class="serivce-item fl"></i>
 						<div class="service-text">
 							<h4>正品保障</h4>
 							<p>正品保障，提供发票</p>
 						</div>
-
 					</li>
 					<li class="grid-service-item intro  intro3">
-
 						<i class="serivce-item fl"></i>
 						<div class="service-text">
 							<h4>正品保障</h4>
 							<p>正品保障，提供发票</p>
 						</div>
-
 					</li>
 					<li class="grid-service-item  intro intro4">
-
 						<i class="serivce-item fl"></i>
 						<div class="service-text">
 							<h4>正品保障</h4>
 							<p>正品保障，提供发票</p>
 						</div>
-
 					</li>
 					<li class="grid-service-item intro intro5">
-
 						<i class="serivce-item fl"></i>
 						<div class="service-text">
 							<h4>正品保障</h4>
 							<p>正品保障，提供发票</p>
 						</div>
-
 					</li>
 				</ul>
 			</div>
@@ -300,7 +279,6 @@
 							<li>常见问题</li>
 							<li>购物指南</li>
 						</ul>
-
 					</div>
 					<div class="yui3-u-1-6">
 						<h4>配送方式</h4>

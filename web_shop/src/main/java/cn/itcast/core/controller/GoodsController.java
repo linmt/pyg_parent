@@ -21,6 +21,9 @@ public class GoodsController {
     @Reference
     private GoodsService goodsService;
 
+//    @Reference
+//    private SolrManagerService solrManagerService;
+
     @RequestMapping("/add")
     public Result add(@RequestBody GoodsEntity goodsEntity) {
         try {
@@ -73,7 +76,14 @@ public class GoodsController {
     @RequestMapping("/delete")
     public Result delete(Long[] ids) {
         try {
-            goodsService.delete(ids);
+            if (ids != null) {
+                for (Long id : ids) {
+                    //1. 根据商品id删除数据库中商品数据
+                    goodsService.delete(id);
+                    //2. 根据商品id删除solr索引库中数据
+//                    solrManagerService.deleteItemFromSolr(id);
+                }
+            }
             return  new Result(true, "删除成功!");
         } catch (Exception e) {
             e.printStackTrace();

@@ -20,9 +20,17 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
+import javax.jms.TextMessage;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
@@ -50,6 +58,17 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private SellerDao sellerDao;
+
+    @Autowired
+    private JmsTemplate jmsTemplate;
+
+    //为商品上架使用
+    @Autowired
+    private ActiveMQTopic topicPageAndSolrDestination;
+
+    //为商品下架使用
+    @Autowired
+    private ActiveMQQueue queueSolrDeleteDestination;
 
     @Override
     public void add(GoodsEntity goodsEntity) {
@@ -99,6 +118,8 @@ public class GoodsServiceImpl implements GoodsService {
         //卖家名称
         Seller seller = sellerDao.selectByPrimaryKey(goodsEntity.getGoods().getSellerId());
         item.setSeller(seller.getName());
+        //卖家id
+        item.setSellerId(goodsEntity.getGoods().getSellerId());
         //示例图片
         String itemImages = goodsEntity.getGoodsDesc().getItemImages();
         List<Map> maps = JSON.parseArray(itemImages, Map.class);
@@ -213,36 +234,61 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public void delete(Long[] ids) {
-        if (ids != null) {
-            for (Long id : ids) {
-                Goods goods = new Goods();
-                goods.setId(id);
-                goods.setIsDelete("1");
-                goodsDao.updateByPrimaryKeySelective(goods);
-            }
+    public void delete(final Long id) {
+        if (id!= null) {
+            /**
+             * 1. 到数据库中对商品进行逻辑删除
+             */
+            Goods goods = new Goods();
+            goods.setId(id);
+            goods.setIsDelete("1");
+            goodsDao.updateByPrimaryKeySelective(goods);
+
+            /**
+             * 2 将商品id作为消息发送给消息服务器
+             */
+            jmsTemplate.send(queueSolrDeleteDestination, new MessageCreator() {
+                @Override
+                public Message createMessage(Session session) throws JMSException {
+                    TextMessage textMessage = session.createTextMessage(String.valueOf(id));
+                    return textMessage;
+                }
+            });
         }
     }
 
     @Override
-    public void updateStatus(Long[] ids, String status) {
-        if (ids != null) {
-            for (Long id : ids) {
-                //1. 根据商品id修改商品对象状态码
-                Goods goods  = new Goods();
-                goods.setId(id);
-                goods.setAuditStatus(status);
-                goodsDao.updateByPrimaryKeySelective(goods);
+    public void updateStatus(final Long id, String status) {
+        /**
+         * 根据商品id到数据库中将商品的上架状态改变
+         */
 
-                //2. 根据商品id修改库存集合对象状态码
-                Item item = new Item();
-                item.setStatus(status);
+        //1. 根据商品id修改商品对象状态码
+        Goods goods  = new Goods();
+        goods.setId(id);
+        goods.setAuditStatus(status);
+        goodsDao.updateByPrimaryKeySelective(goods);
 
-                ItemQuery query = new ItemQuery();
-                ItemQuery.Criteria criteria = query.createCriteria();
-                criteria.andGoodsIdEqualTo(id);
-                itemDao.updateByExampleSelective(item, query);
-            }
+        //2. 根据商品id修改库存集合对象状态码
+        Item item = new Item();
+        item.setStatus(status);
+
+        ItemQuery query = new ItemQuery();
+        ItemQuery.Criteria criteria = query.createCriteria();
+        criteria.andGoodsIdEqualTo(id);
+        itemDao.updateByExampleSelective(item, query);
+
+        /**
+         * 将商品id作为消息发送给消息服务器
+         */
+        if ("1".equals(status)) {
+            jmsTemplate.send(topicPageAndSolrDestination, new MessageCreator() {
+                @Override
+                public Message createMessage(Session session) throws JMSException {
+                    TextMessage textMessage = session.createTextMessage(String.valueOf(id));
+                    return textMessage;
+                }
+            });
         }
     }
 }

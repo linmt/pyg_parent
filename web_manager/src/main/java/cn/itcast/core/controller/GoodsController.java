@@ -21,6 +21,11 @@ public class GoodsController {
     @Reference
     private GoodsService goodsService;
 
+//    @Reference
+//    private SolrManagerService solrManagerService;
+//
+//    @Reference
+//    private CmsService cmsService;
 
     @RequestMapping("/search")
     public PageResult search(@RequestBody Goods goods, Integer page , Integer rows) {
@@ -39,7 +44,14 @@ public class GoodsController {
     @RequestMapping("/delete")
     public Result delete(Long[] ids) {
         try {
-            goodsService.delete(ids);
+            if (ids != null) {
+                for (Long id : ids) {
+                    //1. 根据商品id到数据库中删除
+                    goodsService.delete(id);
+                    //2. 根据商品id到solr索引库中删除对应的数据
+//                    solrManagerService.deleteItemFromSolr(id);
+                }
+            }
             return  new Result(true, "删除成功!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,11 +68,42 @@ public class GoodsController {
     @RequestMapping("/updateStatus")
     public Result updateStatus(Long[] ids, String status) {
         try {
-            goodsService.updateStatus(ids, status);
+            if (ids != null) {
+                for (Long id : ids) {
+                    //1. 到数据库中根据商品id改变商品的上架状态
+                    goodsService.updateStatus(id, status);
+                    //2. 对于审核通过的商品
+//                    if ("1".equals(status)) {
+//                        //3. 将根据商品id获取库存数据, 放入solr索引库供搜索使用
+//                        solrManagerService.saveItemToSolr(id);
+//                        //4. 根据商品id获取商品的详细数据, 并且根据数据和模板生成商品详情页面
+//                        Map<String, Object> goodsData = cmsService.findGoodsData(id);
+//                        cmsService.createStaticPage(id, goodsData);
+//                    }
+                }
+            }
+
             return new Result(true, "状态修改成功!");
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false, "状态修改失败!");
         }
     }
+
+    /**
+     * 测试生成静态页面
+     * @param goodsId   商品id
+     * @return
+     */
+//    @RequestMapping("/testPage")
+//    public Boolean testCreatePage(Long goodsId) {
+//        try {
+//            Map<String, Object> goodsData = cmsService.findGoodsData(goodsId);
+//            cmsService.createStaticPage(goodsId, goodsData);
+//            return true;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
 }

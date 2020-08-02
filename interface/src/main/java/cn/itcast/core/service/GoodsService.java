@@ -14,7 +14,7 @@ public interface GoodsService {
 
     public void update(GoodsEntity goodsEntity);
 
-    public void delete(Long[] ids);
+    public void delete(Long id);
 
-    public void updateStatus(Long[] ids, String status);
+    public void updateStatus(Long id, String status);
 }

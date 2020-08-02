@@ -39,7 +39,8 @@ app.controller('goodsController', function ($scope, $controller, $location, type
                 // 处理扩展属性:
                 $scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.entity.goodsDesc.customAttributeItems);
 
-                // 处理规格  [{"attributeName":"网络","attributeValue":["移动3G","联通3G"]},{"attributeName":"机身内存","attributeValue":["16G","128G"]}]
+                // 处理规格  [{"attributeName":"网络","attributeValue":["移动3G","联通3G"]},
+                // {"attributeName":"机身内存","attributeValue":["16G","128G"]}]
                 $scope.entity.goodsDesc.specificationItems = JSON.parse($scope.entity.goodsDesc.specificationItems);
 
                 // 遍历SKU的集合:
@@ -227,7 +228,6 @@ app.controller('goodsController', function ($scope, $controller, $location, type
         var items = $scope.entity.goodsDesc.specificationItems;
 
         for (var i = 0; i < items.length; i++) {
-            //
             $scope.entity.itemList = addColumn($scope.entity.itemList, items[i].attributeName, items[i].attributeValue);
         }
     }
